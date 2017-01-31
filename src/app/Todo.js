@@ -28,15 +28,19 @@ export class Todo extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput
-          style={ styles.container }
-          value={ this.state.newTodo }
-          onChangeText={ this.handleChange.bind(this) }
-        />
-        <TouchableOpacity onPress={this.handlePress.bind(this) }>
-          <Text>Add Todo</Text>
-        </TouchableOpacity>
+      <View style={ styles.container }>
+        <View style={ styles.form }>
+          <TextInput
+            style={ styles.input }
+            value={ this.state.newTodo }
+            onChangeText={ this.handleChange.bind(this) }
+          />
+          <TouchableOpacity
+            style={ styles.button }
+            onPress={this.handlePress.bind(this) }>
+            <Text>Add Todo</Text>
+          </TouchableOpacity>
+        </View>
         <View>
           { this.state.todos.map((todo, i) => <Text key={ i }>{ todo }</Text>) }
         </View>
@@ -47,8 +51,18 @@ export class Todo extends Component {
 
 const styles = StyleSheet.create({
   container: {
+
+  },
+  form: {
+    flexDirection: 'row',
     height: 40,
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
+  },
+  input: {
+    flex: 0.7
+  },
+  button: {
+    flex: 0.3
   }
 });
