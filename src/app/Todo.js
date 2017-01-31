@@ -28,41 +28,65 @@ export class Todo extends Component {
 
   render() {
     return (
-      <View style={ styles.container }>
-        <View style={ styles.form }>
+      <View style={styles.container}>
+        <View style={styles.form}>
           <TextInput
-            style={ styles.input }
-            value={ this.state.newTodo }
-            onChangeText={ this.handleChange.bind(this) }
+            style={styles.input}
+            value={this.state.newTodo}
+            onChangeText={this.handleChange.bind(this)}
           />
           <TouchableOpacity
-            style={ styles.button }
-            onPress={this.handlePress.bind(this) }>
-            <Text>Add Todo</Text>
+            style={styles.button}
+            onPress={this.handlePress.bind(this)}>
+            <Text style={styles.buttonText}>make</Text>
           </TouchableOpacity>
         </View>
-        <View>
-          { this.state.todos.map((todo, i) => <Text key={ i }>{ todo }</Text>) }
+        <View style={styles.todos}>
+          {this.state.todos.map((todo, i) => (
+            <View key={i} style={styles.todo}>
+              <Text style={styles.todoText} >{todo}</Text>
+            </View>
+          ))}
         </View>
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-
+    flex: 1,
+    padding: 20
   },
   form: {
-    flexDirection: 'row',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+    flexDirection: 'row'
   },
   input: {
-    flex: 0.7
+    flex: 0.7,
+    fontSize: 24
   },
   button: {
-    flex: 0.3
+    flex: 0.3,
+    borderWidth: 1,
+    height: 50,
+    borderColor: 'blue',
+    borderRadius: 3,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+  todos: {
+    marginTop: 60
+  },
+  todo: {
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgrey'
+  },
+  todoText: {
+    fontSize: 24
   }
-});
+})
