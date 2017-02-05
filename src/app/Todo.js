@@ -17,13 +17,37 @@ export class Todo extends Component {
     }
   }
 
+  componentWillMount() {
+    fetch('http://localhost:3000/todos', {
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(todos => this.setState({todos: todos }))
+  }
+
   handleChange(text) {
     this.setState({ newTodo: text});
   }
 
   handlePress() {
-    const todos = [...this.state.todos, this.state.newTodo];
-    this.setState({todos, newTodo: ''});
+    fetch('http://localhost:3000/todos', {
+      method: 'post',
+      body: JSON.stringify({
+        name: this.state.newTodo
+      }),
+      headers: {
+        'Accept': 'application/json'
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(todo => {
+      const todos = [todo, ...this.state.todos]
+      this.setState({todos, newTodo: ''});
+    })
+    // const todos = [...this.state.todos, this.state.newTodo];
   }
 
   render() {
@@ -38,13 +62,13 @@ export class Todo extends Component {
           <TouchableOpacity
             style={styles.button}
             onPress={this.handlePress.bind(this)}>
-            <Text style={styles.buttonText}>make</Text>
+            <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.todos}>
           {this.state.todos.map((todo, i) => (
             <View key={i} style={styles.todo}>
-              <Text style={styles.todoText} >{todo}</Text>
+              <Text style={styles.todoText} >{todo.name}</Text>
             </View>
           ))}
         </View>
